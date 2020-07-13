@@ -1,0 +1,8 @@
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\bin\Debug\netcoreapp3.0\appsettings.Development.json
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\bin\Debug\netcoreapp3.0\appsettings.json
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\bin\Debug\netcoreapp3.0\Properties\launchSettings.json
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\bin\Debug\netcoreapp3.0\EFCoreWebAPI.exe
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcoreapp3.0\EFCoreWebAPI.csprojAssemblyReference.cache
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcoreapp3.0\EFCoreWebAPI.AssemblyInfoInputs.cache
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcoreapp3.0\EFCoreWebAPI.AssemblyInfo.cs
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcoreapp3.0\EFCoreWebAPI.RazorTargetAssemblyInfo.cache
