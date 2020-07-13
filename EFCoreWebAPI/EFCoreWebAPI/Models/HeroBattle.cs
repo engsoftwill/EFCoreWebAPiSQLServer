@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 
 namespace EFCoreWebAPI.Models
 {
-    public class Class
+    public class HeroBattle
     {
+        public int HeroId { get; set; }
+        public Hero Hero { get; set; }      //many heros were in this battle
+        public int BattleId { get; set; }        
+        public Battle Battle { get; set; }  //This hero fight in many battles
+
     }
 }

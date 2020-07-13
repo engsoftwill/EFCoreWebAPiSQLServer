@@ -12,5 +12,7 @@ namespace EFCoreWebAPI.Models
         public int BattleId { get; set; }
         public DateTime Dtbegin { get; set; }
         public DateTime Dtfinish { get; set; }
+        public List<HeroBattle> HeroesBattles { get; set; }
+
     }
 }

@@ -10,8 +10,10 @@ namespace EFCoreWebAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public Secretidentity Secretidentity { get; set; }
         public int BattleId { get; set; }
-        public Battle   Battle { get; set; }
+        public List<Weapon> Weapons { get; set; }
+        public List<HeroBattle>   HeroBattles { get; set; }
 
     }
 }
