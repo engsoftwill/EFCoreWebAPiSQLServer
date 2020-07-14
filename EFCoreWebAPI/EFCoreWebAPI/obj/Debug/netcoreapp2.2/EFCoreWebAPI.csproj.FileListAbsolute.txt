@@ -16,3 +16,5 @@ C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcorea
 C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcoreapp2.2\EFCoreWebAPI.dll
 C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcoreapp2.2\EFCoreWebAPI.pdb
 C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\obj\Debug\netcoreapp2.2\EFCoreWebAPI.genruntimeconfig.cache
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\bin\Debug\netcoreapp2.2\EFCore.Dominio.dll
+C:\Users\willi\udemyEFCoreAspnetsql\EFCoreWebAPI\EFCoreWebAPI\bin\Debug\netcoreapp2.2\EFCore.Repo.dll
