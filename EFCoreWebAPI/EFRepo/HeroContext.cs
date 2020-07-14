@@ -11,10 +11,7 @@ namespace EFCore.Repo
 {
     public class HeroContext : DbContext
     {
-        public HeroContext()
-        {
-
-        }
+       
         public HeroContext(DbContextOptions<HeroContext> options) : base(options) { }
 
         public DbSet<Hero> Heroes { get; set; }
@@ -23,10 +20,6 @@ namespace EFCore.Repo
         public DbSet<Secretidentity> Secretidentitys { get; set; }
         public DbSet<HeroBattle> HeroBattles { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=heroapp;Data Source=DESKTOP-F99HABO\SQLEXPRESS01");
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HeroBattle>(entity =>
