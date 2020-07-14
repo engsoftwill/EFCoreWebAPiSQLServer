@@ -70,8 +70,28 @@ namespace EFCoreWebAPIcomplet.Controllers
 
         // PUT api/<HeroController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id)
         {
+            try
+            {
+                var heroi = new Hero
+                {
+                    Id = id,
+                    Name = "IronMan",
+                    Weapons = new List<Weapon>
+                    {
+                        new Weapon { Name = "Mark 3" },
+                        new Weapon { Name = "Mark 5" }
+                    }
+                };
+                _context.Heroes.Update(heroi);
+                _context.SaveChanges();
+                return Ok("BAZINGA");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error!: {ex} ");
+            }
         }
 
         // DELETE api/<HeroController>/5
