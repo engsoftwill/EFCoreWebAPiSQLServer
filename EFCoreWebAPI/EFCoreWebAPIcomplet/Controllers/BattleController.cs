@@ -46,6 +46,25 @@ namespace EFCoreWebAPIcomplet.Controllers
             return Ok(battle);
         }
 
+        // POST api/<BattleController>
+        [HttpPost]
+        public ActionResult Post(Battle model)
+        {
+            try
+            {
+
+                _context.Battles.Add(model);
+                _context.SaveChanges();
+                return Ok("BAZINGA");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error!: {ex} ");
+            }
+        }
+
+
         
+
     }
 }
