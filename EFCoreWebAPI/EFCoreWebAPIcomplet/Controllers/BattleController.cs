@@ -21,6 +21,22 @@ namespace EFCoreWebAPIcomplet.Controllers
         {
             _context = context;
         }
+        // GET: api/<BattleController>
+        [HttpGet]
+        public ActionResult Get()
+        {
+            try
+            {
+                return Ok(new Battle());
+            }
+            catch (Exception ex1)
+            {
+
+                return BadRequest($"Error!: {ex1} ");
+            }
+
+        }
+
 
 
         // PUT api/<BattleController>/5
