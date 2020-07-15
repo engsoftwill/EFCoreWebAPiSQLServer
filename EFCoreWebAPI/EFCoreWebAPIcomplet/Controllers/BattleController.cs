@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFCore.Dominio;
 using EFCore.Repo;
+using EFCore.Repo.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +16,11 @@ namespace EFCoreWebAPIcomplet.Controllers
     [ApiController]
     public class BattleController : ControllerBase
     {
-        private readonly HeroContext _context;
+        private readonly IEFCoreRepository _repo;
 
-        public BattleController(HeroContext context)
+        public BattleController(IEFCoreRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
         // GET: api/<BattleController>
         [HttpGet]
@@ -37,7 +38,7 @@ namespace EFCoreWebAPIcomplet.Controllers
 
         }
 
-
+        /*
         // GET api/<BattleController>/5
         [HttpGet("{id}", Name = "GetBattle")]
         public ActionResult Get(int id)
@@ -45,24 +46,28 @@ namespace EFCoreWebAPIcomplet.Controllers
             var battle = _context.Battles.Find(id);
             return Ok(battle);
         }
-
+        */
         // POST api/<BattleController>
         [HttpPost]
-        public ActionResult Post(Battle model)
+        public async Task<IActionResult> Post(Battle model)
         {
             try
             {
 
-                _context.Battles.Add(model);
-                _context.SaveChanges();
-                return Ok("BAZINGA");
+                _repo.Add(model);
+                if (await _repo.SaveChangeAsync())
+                {
+                    return Ok("BAZINGA");
+                }
+                    return Ok("Nao salvo");
+
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error!: {ex} ");
             }
         }
-
+        /*
         // PUT api/<BattleController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, Battle model)
@@ -90,7 +95,7 @@ namespace EFCoreWebAPIcomplet.Controllers
         {
         }
 
-
+        */
 
 
     }
