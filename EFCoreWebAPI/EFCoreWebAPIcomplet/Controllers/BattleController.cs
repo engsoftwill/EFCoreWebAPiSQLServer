@@ -24,11 +24,12 @@ namespace EFCoreWebAPIcomplet.Controllers
         }
         // GET: api/<BattleController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                return Ok(new Battle());
+                var herois = await _repo.GetAllHeroes();
+                return Ok(herois);
             }
             catch (Exception ex1)
             {
