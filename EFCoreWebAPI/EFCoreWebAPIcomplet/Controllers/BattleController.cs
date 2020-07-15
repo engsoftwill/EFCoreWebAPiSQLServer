@@ -38,32 +38,14 @@ namespace EFCoreWebAPIcomplet.Controllers
         }
 
 
-
-        // PUT api/<BattleController>/5
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, Battle model)
+        // GET api/<BattleController>/5
+        [HttpGet("{id}", Name = "GetBattle")]
+        public ActionResult Get(int id)
         {
-            try
-            {
-                if (_context.Battles.AsNoTracking()
-                    .FirstOrDefault(x => x.Id == id) != null)
-                {
-                    _context.Battles.Update(model);
-                    _context.SaveChanges();
-                    return Ok("BAZINGA");
-                }
-                return Ok("Hero not found");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error!: {ex} ");
-            }
+            var battle = _context.Battles.Find(id);
+            return Ok(battle);
         }
 
-        // DELETE api/<BattleController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
     }
 }
