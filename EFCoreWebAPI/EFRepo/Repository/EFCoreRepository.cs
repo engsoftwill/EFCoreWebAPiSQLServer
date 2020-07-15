@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EFCore.Repo.Repository
 {
-    class EFCoreRepository : IEFCoreRepository
+    public class EFCoreRepository : IEFCoreRepository
     {
         private readonly HeroContext _context;
 

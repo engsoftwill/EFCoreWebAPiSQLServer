@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EFCore.Repo;
+using EFCore.Repo.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,7 @@ namespace EFCoreWebAPIcomplet
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddControllers();
+            services.AddScoped<IEFCoreRepository, EFCoreRepository>();
         }
 
         
