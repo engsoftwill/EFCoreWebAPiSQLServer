@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EFCore.Dominio;
 using EFCore.Repo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +27,7 @@ namespace EFCoreWebAPIcomplet.Controllers
         {
             try
             {
-                return Ok("BAZINGA");
+                return Ok(new Hero() );
             }
             catch (Exception ex)
             {
@@ -40,25 +41,17 @@ namespace EFCoreWebAPIcomplet.Controllers
         [HttpGet("{id}", Name = "Get")]
         public ActionResult Get(int id)
         {
-            return Ok("value");
+            return Ok();
         }
 
         // POST api/<HeroController>
         [HttpPost]
-        public ActionResult Post(Hero value)
+        public ActionResult Post(Hero model)
         {
             try
             {
-                var heroi = new Hero
-                {
-                    Name = "IronMan",
-                    Weapons = new List<Weapon>
-                    {
-                        new Weapon { Name = "Mark 3" },
-                        new Weapon { Name = "Mark 3" }
-                    }
-                };
-                _context.Heroes.Add(heroi);
+                
+                _context.Heroes.Add(model);
                 _context.SaveChanges();
                 return Ok("BAZINGA");
             }
@@ -70,23 +63,18 @@ namespace EFCoreWebAPIcomplet.Controllers
 
         // PUT api/<HeroController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id)
+        public ActionResult Put(int id, Hero model)
         {
             try
             {
-                var heroi = new Hero
+                if (_context.Heroes.AsNoTracking()
+                    .FirstOrDefault(x => x.Id == id) != null)
                 {
-                    Id = id,
-                    Name = "IronMan",
-                    Weapons = new List<Weapon>
-                    {
-                        new Weapon { Name = "Mark 3" },
-                        new Weapon { Name = "Mark 5" }
-                    }
-                };
-                _context.Heroes.Update(heroi);
-                _context.SaveChanges();
-                return Ok("BAZINGA");
+                    _context.Heroes.Update(model);
+                    _context.SaveChanges();
+                    return Ok("BAZINGA");
+                }
+                return Ok("Hero not found");
             }
             catch (Exception ex)
             {
