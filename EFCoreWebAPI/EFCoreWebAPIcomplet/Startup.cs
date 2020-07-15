@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace EFCoreWebAPIcomplet
 {
@@ -33,6 +34,10 @@ namespace EFCoreWebAPIcomplet
             });
             services.AddControllers();
             services.AddScoped<IEFCoreRepository, EFCoreRepository>();
+            services.AddControllers().AddNewtonsoftJson(o =>
+            {
+                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
         }
 
         

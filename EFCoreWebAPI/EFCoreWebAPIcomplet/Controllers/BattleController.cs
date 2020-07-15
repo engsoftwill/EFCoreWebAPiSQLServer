@@ -75,14 +75,9 @@ namespace EFCoreWebAPIcomplet.Controllers
         {
             try
             {
-                if (_repo.Exist(id))
-                {
-                    _repo.Update(model);
-                    if (await _repo.SaveChangeAsync())
-                    {
+                
                         return Ok("BAZINGA");
-                    }
-                }
+            
             }
             catch (Exception ex)
             {
@@ -90,7 +85,7 @@ namespace EFCoreWebAPIcomplet.Controllers
             }
             return BadRequest("Not Saved");
         }
-        
+        /*
         // DELETE api/<BattleController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
@@ -112,6 +107,6 @@ namespace EFCoreWebAPIcomplet.Controllers
             }
             return BadRequest("Not Saved");
         }
-
+        */
     }
 }
