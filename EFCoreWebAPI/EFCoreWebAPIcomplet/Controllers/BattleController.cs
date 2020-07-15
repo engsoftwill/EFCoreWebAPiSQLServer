@@ -76,7 +76,7 @@ namespace EFCoreWebAPIcomplet.Controllers
                     _context.SaveChanges();
                     return Ok("BAZINGA");
                 }
-                return Ok("Hero not found");
+                return Ok("Battle not found");
             }
             catch (Exception ex)
             {
