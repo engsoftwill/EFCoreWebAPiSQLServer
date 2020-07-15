@@ -59,44 +59,59 @@ namespace EFCoreWebAPIcomplet.Controllers
                 {
                     return Ok("BAZINGA");
                 }
-                    return Ok("Nao salvo");
+                    
 
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error!: {ex} ");
             }
+            return BadRequest("Not Saved");
         }
-        /*
+        
         // PUT api/<BattleController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, Battle model)
+        public async Task<IActionResult> Put(int id, Battle model)
         {
             try
             {
-                if (_context.Battles.AsNoTracking()
-                    .FirstOrDefault(x => x.Id == id) != null)
+                if (_repo.Exist(id))
                 {
-                    _context.Battles.Update(model);
-                    _context.SaveChanges();
-                    return Ok("BAZINGA");
+                    _repo.Update(model);
+                    if (await _repo.SaveChangeAsync())
+                    {
+                        return Ok("BAZINGA");
+                    }
                 }
-                return Ok("Battle not found");
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error!: {ex} ");
             }
+            return BadRequest("Not Saved");
         }
-
+        
         // DELETE api/<BattleController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            try
+            {
+
+                _repo.Delete(Re);
+                if (await _repo.SaveChangeAsync())
+                {
+                    return Ok("BAZINGA");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error!: {ex} ");
+            }
+            return BadRequest("Not Saved");
         }
-
-        */
-
 
     }
 }
