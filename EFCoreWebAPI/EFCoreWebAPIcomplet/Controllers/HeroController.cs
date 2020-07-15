@@ -41,7 +41,18 @@ namespace EFCoreWebAPIcomplet.Controllers
         [HttpGet("{id}", Name = "Get")]
         public ActionResult Get(int id)
         {
-            return Ok();
+            try
+            {
+                var heroi = (from h in _context.Heroes
+                             where h.Id == id
+                             select h).FirstOrDefault();
+                return Ok(heroi);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest($"Error!: {ex} ");
+            }
         }
 
         // POST api/<HeroController>
