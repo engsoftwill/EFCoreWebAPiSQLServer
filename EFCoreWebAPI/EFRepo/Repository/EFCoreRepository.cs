@@ -38,24 +38,61 @@ namespace EFCore.Repo.Repository
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public async Task<IEnumerable<Hero>> GetAllHeroes()
+        public async Task<IEnumerable<Hero>> GetAllHeroes(bool includbattle = false)
         {
             IQueryable<Hero> query = _context.Heroes.Include(x => x.Weapons)
                 .Include(x => x.Secretidentity);
-            query = query.Include(x => x.HeroBattles).ThenInclude(y => y.Battle);
+            if (includbattle)
+                query = query.Include(x => x.HeroBattles).ThenInclude(y => y.Battle);
 
             query = query.AsNoTracking().OrderBy(x => x.Id);
             return await query.ToArrayAsync();
         }
 
-        public Task<Hero> GetAHeroById(int id)
+        public async Task<Hero> GetAHeroById(int id, bool includbattle = false)
         {
-            throw new NotImplementedException();
+            IQueryable<Hero> query = _context.Heroes.Include(x => x.Weapons)
+                .Include(x => x.Secretidentity);
+            if (includbattle)
+                query = query.Include(x => x.HeroBattles).ThenInclude(y => y.Battle);
+
+            query = query.AsNoTracking().OrderBy(x => x.Id);
+            return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<Hero> GetHeroByName(string name)
+        public async Task<Hero[]> GetHerosByName(string name, bool includbattle = false)
         {
-            throw new NotImplementedException();
+            IQueryable<Hero> query = _context.Heroes.Include(x => x.Weapons)
+                .Include(x => x.Secretidentity);
+            if (includbattle)
+                query = query.Include(x => x.HeroBattles).ThenInclude(y => y.Battle);
+
+            query = query.AsNoTracking()
+                .Where(x => x.Name.Contains(name))
+                .OrderBy(x => x.Id);
+
+            return await query.ToArrayAsync();
         }
+
+        public async Task<IEnumerable<Battle>> GetAllBattles(bool includehero = false)
+        {
+            IQueryable<Battle> query = _context.Battles;
+            if (includehero)
+                query = query.Include(x => x.HeroesBattles).ThenInclude(y => y.Hero);
+
+            query = query.AsNoTracking().OrderBy(x => x.Id);
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Battle> GetABattleById(int id, bool includehero = false)
+        {
+            IQueryable<Battle> query = _context.Battles;
+            if (includehero)
+                query = query.Include(x => x.HeroesBattles).ThenInclude(y => y.Hero);
+
+            query = query.AsNoTracking().OrderBy(x => x.Id);
+            return await query.FirstOrDefaultAsync();
+        }
+
     }
 }

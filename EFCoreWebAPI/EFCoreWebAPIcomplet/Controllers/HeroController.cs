@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFCore.Dominio;
 using EFCore.Repo;
+using EFCore.Repo.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,44 +16,45 @@ namespace EFCoreWebAPIcomplet.Controllers
     [ApiController]
     public class HeroController : ControllerBase
     {
-        private readonly HeroContext _context;
-
-        public HeroController(HeroContext context)
+        private readonly IEFCoreRepository _repo;
+        public HeroController(IEFCoreRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
         // GET: api/<HeroController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
             try
             {
-                return Ok(new Hero() );
+                var herois = await _repo.GetAllHeroes(true);
+                if (herois != null)
+                    return Ok( herois );
             }
             catch (Exception ex)
             {
 
                 return BadRequest($"Error!: {ex} ");
             }
-            
+            return BadRequest("Nao ha herois");
         }
 
         // GET api/<HeroController>/5
         [HttpGet("{id}", Name = "Get")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
             try
             {
-                var heroi = (from h in _context.Heroes
-                             where h.Id == id
-                             select h).FirstOrDefault();
-                return Ok(heroi);
+                var heroi = await _repo.GetAHeroById(id,true);
+                    if (heroi != null)
+                    return Ok(heroi);
             }
             catch (Exception ex)
             {
 
                 return BadRequest($"Error!: {ex} ");
             }
+            return BadRequest("Nao ha heroi com este id");
         }
 
         // POST api/<HeroController>
@@ -61,6 +63,7 @@ namespace EFCoreWebAPIcomplet.Controllers
         {
             try
             {
+
                 
                 _context.Heroes.Add(model);
                 _context.SaveChanges();

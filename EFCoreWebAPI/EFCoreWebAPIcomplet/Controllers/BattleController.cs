@@ -28,8 +28,8 @@ namespace EFCoreWebAPIcomplet.Controllers
         {
             try
             {
-                var herois = await _repo.GetAllHeroes();
-                return Ok(herois);
+                var batalhas = await _repo.GetAllBattles(true);
+                return Ok(batalhas);
             }
             catch (Exception ex1)
             {
@@ -39,15 +39,24 @@ namespace EFCoreWebAPIcomplet.Controllers
 
         }
 
-        /*
+        
         // GET api/<BattleController>/5
         [HttpGet("{id}", Name = "GetBattle")]
-        public ActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var battle = _context.Battles.Find(id);
-            return Ok(battle);
+            try
+            {
+                var heroi = await _repo.GetABattleById(id,true);
+                if (heroi != null)
+                    return Ok(heroi);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error!: {ex} ");
+            }
+            return BadRequest("Not Found");
         }
-        */
+        
         // POST api/<BattleController>
         [HttpPost]
         public async Task<IActionResult> Post(Battle model)
@@ -76,38 +85,41 @@ namespace EFCoreWebAPIcomplet.Controllers
         {
             try
             {
-                
-                        return Ok("BAZINGA");
-            
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error!: {ex} ");
-            }
-            return BadRequest("Not Saved");
-        }
-        /*
-        // DELETE api/<BattleController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            try
-            {
-
-                _repo.Delete(Re);
+                var heroi = await _repo.GetABattleById(id);
+                if (heroi != null)
+                    _repo.Update(model);
                 if (await _repo.SaveChangeAsync())
                 {
                     return Ok("BAZINGA");
                 }
-
-
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error!: {ex} ");
             }
-            return BadRequest("Not Saved");
+            return BadRequest("Not Deleted");
         }
-        */
+
+        // DELETE api/<BattleController>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var heroi = await _repo.GetABattleById(id);
+                if (heroi != null  )
+                _repo.Delete(heroi);
+                if (await _repo.SaveChangeAsync())
+                {
+                    return Ok("BAZINGA");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error!: {ex} ");
+            }
+            return BadRequest("Not Deleted");
+        }
+        
     }
 }
