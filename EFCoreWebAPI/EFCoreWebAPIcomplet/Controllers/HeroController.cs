@@ -23,7 +23,7 @@ namespace EFCoreWebAPIcomplet.Controllers
         }
         // GET: api/<HeroController>
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace EFCoreWebAPIcomplet.Controllers
 
         // GET api/<HeroController>/5
         [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
@@ -59,47 +59,62 @@ namespace EFCoreWebAPIcomplet.Controllers
 
         // POST api/<HeroController>
         [HttpPost]
-        public ActionResult Post(Hero model)
+        public async Task<IActionResult> Post(Hero model)
         {
             try
             {
-
                 
-                _context.Heroes.Add(model);
-                _context.SaveChanges();
-                return Ok("BAZINGA");
+                _repo.Add(model);
+                if (await _repo.SaveChangeAsync())
+                    return Ok("BAZINGA");
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error!: {ex} ");
             }
+            return BadRequest("Heroi nao adicionado");
         }
 
         // PUT api/<HeroController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, Hero model)
+        public async Task<ActionResult> Put(int id, Hero model)
         {
             try
             {
-                if (_context.Heroes.AsNoTracking()
-                    .FirstOrDefault(x => x.Id == id) != null)
-                {
-                    _context.Heroes.Update(model);
-                    _context.SaveChanges();
+                var heroi = await _repo.GetAHeroById(id, true);
+                if (heroi != null)
+                    _repo.Update(model);
+                if(await _repo.SaveChangeAsync())
                     return Ok("BAZINGA");
-                }
-                return Ok("Hero not found");
+                
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error!: {ex} ");
             }
+            return BadRequest("Hero not found");
         }
 
         // DELETE api/<HeroController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            try
+            {
+                var heroi = await _repo.GetAHeroById(id, true);
+                if (heroi != null)
+                {
+                    _repo.Delete(heroi);
+                    if (await _repo.SaveChangeAsync())
+                        return Ok("BAZINGA");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error!: {ex} ");
+            }
+            return BadRequest("Hero not Deleted");
         }
     }
 }
